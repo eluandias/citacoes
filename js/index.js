@@ -3,6 +3,15 @@
 
 
 // var url = "http://quotes.stormconsultancy.co.uk/random.json?callback=?";
+
+
+
+
+jQuery.ajaxPrefilter(function(options) {
+    if (options.crossDomain && jQuery.support.cors) {
+        options.url = 'http://quotes.stormconsultancy.co.uk/random.json?' + options.url;
+    }
+});
 var url = "http://quotes.stormconsultancy.co.uk/random.json?";
  var ponteapi = "";
 var  apiAutor= "";
