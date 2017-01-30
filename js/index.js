@@ -2,17 +2,10 @@
  */
 
 
+
+
 // var url = "http://quotes.stormconsultancy.co.uk/random.json?callback=?";
-
-
-
-
-jQuery.ajaxPrefilter(function(options) {
-    if (options.crossDomain && jQuery.support.cors) {
-        options.url = 'http://quotes.stormconsultancy.co.uk/random.json?' + options.url;
-    }
-});
-var url = "http://quotes.stormconsultancy.co.uk/random.json?";
+//var url = "http://quotes.stormconsultancy.co.uk/random.json?";
  var ponteapi = "";
 var  apiAutor= "";
 var conteudo = ponteapi;
@@ -20,16 +13,29 @@ var conteudo = ponteapi;
 
 
 
+$.ajaxPrefilter( function (options) {
+  if (options.crossDomain && jQuery.support.cors) {
+    var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+    options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+    //options.url = "http://cors.corsproxy.io/url=" + options.url;
+  }
+});
 
+// $.get(
+//     'http://quotes.stormconsultancy.co.uk/random.json',
+//     function (response) {
+//         console.log("> ", response);
+//         $("#viewer").html(response);
+// });
 
-
+var url = "http://quotes.stormconsultancy.co.uk/random.json?";
 
 
 
 
 var pegaCitacoes = function( ) {
 
-  $.getJSON(url, function(data) {
+  $.get(url, function(data) {
     //console.log(data);
 
     var twUrl = 'https://twitter.com/intent/tweet?text=' + data.quote + ' -' + data.author + '@EluanDias';
