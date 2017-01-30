@@ -2,11 +2,11 @@
  */
 
 
-var url = "http://quotes.stormconsultancy.co.uk/random.json?callback=?"
-
+// var url = "http://quotes.stormconsultancy.co.uk/random.json?callback=?";
+var url = "http://quotes.stormconsultancy.co.uk/random.json?";
  var ponteapi = "";
 var  apiAutor= "";
-var conteudo = ponteapi; 
+var conteudo = ponteapi;
 
 
 
@@ -19,23 +19,23 @@ var conteudo = ponteapi;
 
 
 var pegaCitacoes = function( ) {
-    
+
   $.getJSON(url, function(data) {
     //console.log(data);
-    
+
     var twUrl = 'https://twitter.com/intent/tweet?text=' + data.quote + ' -' + data.author + '@EluanDias';
 
     $(".load").hide();
     $("blockquote").show();
 
    //$(".citacao-texto").html(data.quote);
-   
+
     ponteapi = data.quote;
     apiAutor=data.author;
     tradutor(ponteapi);
     maquina(ponteapi);
-    
- 
+
+
     $(".twitter-share-button").attr("href", twUrl);
 
     if (data.quoteAuthor !== '') {
@@ -45,10 +45,10 @@ var pegaCitacoes = function( ) {
 
       $('.autor').html('Desconhecido');
     }
-   
- 
+
+
   });
-      
+
 };
 
 
@@ -57,20 +57,20 @@ $(document).ready(function() {
   $(".load").show();
   $("blockquote").hide();
   pegaCitacoes();
-  
+
 });
 
 
 
 
 
- 
+
 var tradutor = function() {
-  
+
   var targetLang = $(".lang-select").val();
   var sourceText = ponteapi;
    var sourceAutor= apiAutor;
-   
+
   var url2 = "http://api.grimmstudios.biz/translate/" + targetLang + "/" + encodeURI(sourceText);
 
   $.getJSON(url2, function(data) {
@@ -78,15 +78,15 @@ var tradutor = function() {
     //alert(data[0].Translated);
     var setTranslate = function( valor , call){
       setTimeout(call,valor) };
-    setTranslate (1400,()=>{  
+    setTranslate (1400,()=>{
                     $(".txtTraduzido").html("<spam>"+data[0].Translated+"</spam>");
     $(".autorApi").html(sourceAutor);
-    
-  
+
+
   });
-    
-   
-    
+
+
+
   });
 
 };
@@ -99,7 +99,7 @@ var tradutor = function() {
 
 // ################### efeito maquina de escrever##############
 
-// 
+//
 
 
 
@@ -111,30 +111,30 @@ var maxspeed = 50;
 
 
   var maquina =  function( ponteapi) {
-    
+
      texto = ponteapi;
-        
- 
+
+
    // alert(sourceText);
    // alert(texto);
     digitar();
-    
-  }
-  
 
-  
+  }
+
+
+
   function digitar() {
     //console.log("ok", count);
-  
+
     if(count < texto.length){
     setTimeout(digitar, maxspeed);
   $('.citacao-texto').html('<spam>'+texto.substring(0 , count)+'</spam');
         //console.log(texto.substring(0 , count))
-         
+
     count++;
       console.log(count);
       $("#numChars").html(count);
-      
+
       if ((count > 70 ) && (count < 140)){
         $("#numChars").css("color","blue");
         $("#btTw").css("color","blue");
@@ -142,16 +142,16 @@ var maxspeed = 50;
       else if((count > 140)){
                $("#numChars").css("color","red");
         $("#btTw").css("color","red");
-          
+
               }
-     
+
     }
-    
- 
-   
+
+
+
   }
-  
- 
+
+
 $("#btnCitacao").click(function() {
   $(".load").show();
   $("blockquote").hide();
@@ -159,10 +159,10 @@ $("#btnCitacao").click(function() {
  pegaCitacoes();
 tradutor(ponteapi);
     maquina(ponteapi);
-  
+
    $('html, body').animate({
       scrollTop: 10
     }, 800);
- 
+
 
 });
